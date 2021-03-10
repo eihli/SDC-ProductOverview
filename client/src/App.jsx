@@ -29,53 +29,51 @@ class ProductOverview extends React.Component {
     getProductData(id) {
         fetch(`/products/${id}`)
             .then(data => {
-            return data.json();
-
+                return data.json();
             })
             .then(data => {
                 this.setState({MAWproductData: data})
-
             })
             .then(() => {
                 fetch(`/products/${id}/styles`)
-                .then(data => {
-                    return data.json();
-                })
-                .then(data => {
-                    this.setState({MAWstylesData: data})
-                })
-                .then(() => {
-                    fetch(`http://52.26.193.201:3000/reviews/${id}/meta`)
                     .then(data => {
                         return data.json();
                     })
                     .then(data => {
-                        //Calculating Avg Rating from reviews
-                        var numOfRatings = 0;
-                        var totalStars = 0;
-                        for (var ratingKey in data.ratings) {
-                        numOfRatings += data.ratings[ratingKey];
-                        totalStars += (ratingKey * data.ratings[ratingKey]);
-                        }
-                        if(numOfRatings !== 0) {
-                        return (totalStars / numOfRatings);
-                        } else {
-                        return 0;
-                        }
+                        this.setState({MAWstylesData: data})
                     })
-                    .then(rating => {
-                        this.setState({MAWavgRating: rating});
+                    .then(() => {
+                        fetch(`http://52.26.193.201:3000/reviews/${id}/meta`)
+                            .then(data => {
+                                return data.json();
+                            })
+                            .then(data => {
+                                //Calculating Avg Rating from reviews
+                                var numOfRatings = 0;
+                                var totalStars = 0;
+                                for (var ratingKey in data.ratings) {
+                                    numOfRatings += data.ratings[ratingKey];
+                                    totalStars += (ratingKey * data.ratings[ratingKey]);
+                                }
+                                if(numOfRatings !== 0) {
+                                    return (totalStars / numOfRatings);
+                                } else {
+                                    return 0;
+                                }
+                            })
+                            .then(rating => {
+                                this.setState({MAWavgRating: rating});
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
                     })
                     .catch(err => {
                         console.log(err);
                     })
-                })
-                .catch(err => {
-                    console.log(err);
-                })
             })
             .catch(err => {
-            console.log(err);
+                console.log(err);
             })
     }
 
