@@ -32,7 +32,7 @@ function getSingleProduct(req, res) {
 }
 
 function getSingleProductStyles(req, res) {
-    data.getSingleProduct(5).then((product) => {
+    data.getSingleProductStyles(5).then((product) => {
         res.status(200).send(product);
     });
 }

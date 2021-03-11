@@ -40,7 +40,8 @@ class ProductOverview extends React.Component {
                         return data.json();
                     })
                     .then(data => {
-                        this.setState({MAWstylesData: data})
+                        console.log("Maw styles data", data);
+                        this.setState({MAWstylesData: data});
                     })
                     .then(() => {
                         fetch(`http://52.26.193.201:3000/reviews/${id}/meta`)
@@ -97,12 +98,26 @@ class ProductOverview extends React.Component {
         return (
             <div>
                 <Container className='mb-4'>
-                    <Col xs={{ span: 12 }} className=""><Header MAWproductData={this.state.MAWproductData} handleProductChange={this.handleProductChange.bind(this)}/></Col>
+                    <Col xs={{ span: 12 }} className="">
+                        <Header MAWproductData={this.state.MAWproductData}
+                                handleProductChange={this.handleProductChange.bind(this)}/>
+                    </Col>
                 </Container>
                 <Container>
                     <Row className=''>
-                        <Col className='' md={{span: 7, offset: 1}}><ProductPictures MAWstylesData={this.state.MAWstylesData} styleIndex={this.state.styleIndex}/></Col>
-                        <Col xs={{ span: 4 }} className=""><ProductDetails MAWproductData={this.state.MAWproductData} MAWstylesData={this.state.MAWstylesData} MAWavgRating={this.state.MAWavgRating} handleStyleIndexChange={this.handleStyleIndexChange.bind(this)} styleIndex={this.state.styleIndex}/></Col>
+                        <Col className='' md={{span: 7, offset: 1}}>
+                            <ProductPictures
+                                MAWstylesData={this.state.MAWstylesData}
+                                styleIndex={this.state.styleIndex}/>
+                        </Col>
+                        <Col xs={{ span: 4 }} className="">
+                            <ProductDetails
+                                MAWproductData={this.state.MAWproductData}
+                                MAWstylesData={this.state.MAWstylesData}
+                                MAWavgRating={this.state.MAWavgRating}
+                                handleStyleIndexChange={this.handleStyleIndexChange.bind(this)}
+                                styleIndex={this.state.styleIndex}/>
+                        </Col>
                     </Row>
                     <Row className='mt-4'>
                         <Col className='' md={{span: 7, offset: 1}}><ProductParagraph MAWproductSlogan={this.state.MAWproductData.slogan} MAWproductDescription={this.state.MAWproductData.description}/></Col>

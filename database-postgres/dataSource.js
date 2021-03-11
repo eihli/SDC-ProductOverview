@@ -1,6 +1,7 @@
 const postgres = require('postgres');
 const {Pool} = require('pg');
 let externalPostgresConfig = require('./config.js');
+const queries = require('queries');
 
 const DataSourceType = { POSTGRES: "postgres", MOCK: "mock"};
 
@@ -49,6 +50,85 @@ class PostgresDataSource {
                 });
         });
     }
+
+    getSingleProductStyles(id) {
+        // TODO: Convert to promise.
+        let stylesInfo = {};
+        //pull styles from DB
+        pool.query(
+            `SELECT s.style_id, s.name, s.original_price, s.sale_price, s."default?"
+    FROM styles s
+    WHERE s.product_id=$1
+    `,
+            [id],
+            (err, results, fields) => {
+                if (err) {
+                    throw(err);
+                } else {
+                    stylesInfo.product_id = id;
+                    stylesInfo.results =[];
+                    styleOne = results.rows[0];
+                    styleTwo = results.rows[1];
+
+                    //pull photos from DB
+                    pool.query(
+                        `SELECT p.style_id, p.thumbnail_url, p.url
+          FROM style_photos p
+          WHERE p.product_id=$1
+          `,
+                        [id],
+                        (err, results, fields) => {
+                            if(err) {
+                                throw(err)
+                            } else {
+                                let photoOne = [];
+                                let photoTwo = [];
+                                results.rows.map((row) => {
+                                    if(row.style_id === 1) {
+                                        delete row.style_id
+                                        photoOne.push(row);
+                                    } else if(row.style_id === 2) {
+                                        delete row.style_id
+                                        photoTwo.push(row);
+                                    }
+                                })
+                                styleOne.photos = photoOne;
+                                styleTwo.photos = photoTwo;
+
+                                //pull skus from DB
+                                pool.query(
+                                    `SELECT ss.style_id, ss.size, ss.inStock
+              FROM style_skus ss
+              WHERE ss.product_id=$1
+              `,
+                                    [id],
+                                    (err, results, fields) => {
+                                        if(err) {
+                                            throw(err)
+                                        }
+
+                                        let skuOne = {};
+                                        let skuTwo = {};
+                                        results.rows.map((row) => {
+                                            if(row.style_id === 1) {
+                                                delete row.style_id
+                                                skuOne[row.size] = row.instock;
+                                            } else if(row.style_id === 2) {
+                                                delete row.style_id
+                                                skuTwo[row.size] = row.instock;
+                                            }
+                                        })
+                                        styleOne.skus = skuOne;
+                                        styleTwo.skus = skuTwo;
+                                        stylesInfo.results.push(styleOne, styleTwo)
+                                        res.status(200).send(stylesInfo)
+                                    });
+                            };
+                        });
+                };
+            });
+    };
+});
 }
 
 // Pull this mock data out into its own file.
