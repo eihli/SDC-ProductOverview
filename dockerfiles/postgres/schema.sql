@@ -64,22 +64,6 @@ CREATE TABLE IF NOT EXISTS style_skus (
 );
 
 
-
-
-
-
-
-\COPY products(id, name, slogan, description, category, default_price) FROM '/Users/chriswilson/Documents/GitHub/SDC-ProductOverview/database-postgres/10MproductsList.csv' DELIMITER'|' CSV HEADER;
-
-\COPY product_features(product_id, feature, value) FROM '/Users/chriswilson/Documents/GitHub/SDC-ProductOverview/database-postgres/10Mproductfeatures.csv' DELIMITER'|' CSV HEADER;
-
-\COPY styles(product_id, style_id, name, original_price, sale_price, "default?") FROM '/Users/chriswilson/Documents/GitHub/SDC-ProductOverview/database-postgres/10Mstyles.csv' DELIMITER'|' CSV HEADER;
-
-\COPY style_photos(product_id, style_id, thumbnail_url, url) FROM '/Users/chriswilson/Documents/GitHub/SDC-ProductOverview/database-postgres/10Mphotos.csv' DELIMITER'|' CSV HEADER;
-
-\COPY style_skus(product_id, style_id, size, inStock) FROM '/Users/chriswilson/Documents/GitHub/SDC-ProductOverview/database-postgres/10Mskus.csv' DELIMITER'|' CSV HEADER;
-
-
 CREATE INDEX products_product_id_idx ON products(id);
 
 CREATE INDEX product_features_product_id_idx ON product_features(product_id);

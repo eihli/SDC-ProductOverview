@@ -44,7 +44,8 @@ const getSingleProduct = (req, res) => {
         if (err) {
           throw(err);
         } else {
-          productInfo = results['rows'][0];
+          // Handle no products
+          productInfo = results['rows'][0]; // results['rows'][0] is undefined
           productInfo['features'] =[];
           const id = req.params.product_id;
           //pull features from DB
