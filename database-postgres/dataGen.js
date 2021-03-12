@@ -3,11 +3,11 @@ const faker = require('faker');
 
 
 
-// const writeProducts = fs.createWriteStream('10MproductsList.csv');
-// const writeProductFeatures = fs.createWriteStream('10Mproductfeatures.csv');
-// const writeStyles = fs.createWriteStream('10Mstyles.csv');
-// const writeProductPhotos = fs.createWriteStream('10Mphotos.csv');
-const writeProductSkus = fs.createWriteStream('10Mskus.csv');
+const writeProducts = fs.createWriteStream('productsList.csv');
+const writeProductFeatures = fs.createWriteStream('productfeatures.csv');
+const writeStyles = fs.createWriteStream('styles.csv');
+const writeProductPhotos = fs.createWriteStream('photos.csv');
+const writeProductSkus = fs.createWriteStream('skus.csv');
 
 
 
@@ -16,7 +16,7 @@ const writeProductSkus = fs.createWriteStream('10Mskus.csv');
 //ProductList
 
 function writeTenMillionProducts(writer, encoding, callback) {
-  let i = 10000001;
+  let i = 100;
   let id = -1;
   console.log('#:', id);
   function write() {
@@ -29,7 +29,6 @@ function writeTenMillionProducts(writer, encoding, callback) {
       let description = faker.lorem.sentences(2);
       let category = faker.commerce.product();
       let default_price = faker.commerce.price(2, 1000, 2, '$');
-
 
       const data = `${id}|${name}|${slogan}|${description}|${category}|${default_price}\n`;
 
@@ -51,9 +50,9 @@ function writeTenMillionProducts(writer, encoding, callback) {
 }
 
 
-// writeTenMillionProducts(writeProducts, 'utf-8', () => {
-//   writeProducts.end();
-// });
+writeTenMillionProducts(writeProducts, 'utf-8', () => {
+  writeProducts.end();
+});
 
 
 
@@ -66,8 +65,8 @@ function writeTenMillionProducts(writer, encoding, callback) {
 
 
 function writeTenMillionProductFeatures(writer, encoding, callback) {
-  let i = 10000000;
-  let id = 0;
+  let i = 100;
+  let id = -1;
   console.log('#:', id);
   function write() {
     let ok = true;
@@ -103,9 +102,9 @@ function writeTenMillionProductFeatures(writer, encoding, callback) {
 }
 
 
-// writeTenMillionProductFeatures(writeProductFeatures, 'utf-8', () => {
-//   writeProductFeatures.end();
-// });
+writeTenMillionProductFeatures(writeProductFeatures, 'utf-8', () => {
+  writeProductFeatures.end();
+});
 
 
 
@@ -113,8 +112,8 @@ function writeTenMillionProductFeatures(writer, encoding, callback) {
 //Styles
 
 function writeTenMillionStyles(writer, encoding, callback) {
-  let i = 10000000;
-  let id = 0;
+  let i = 100;
+  let id = -1;
   console.log('#:', id);
   function write() {
     let ok = true;
@@ -155,9 +154,9 @@ function writeTenMillionStyles(writer, encoding, callback) {
 
 
 
-// writeTenMillionStyles(writeStyles, 'utf-8', () => {
-//     writeStyles.end();
-// });
+writeTenMillionStyles(writeStyles, 'utf-8', () => {
+    writeStyles.end();
+});
 
 
 
@@ -166,8 +165,8 @@ function writeTenMillionStyles(writer, encoding, callback) {
 //Photos
 
 function writeTenMillionProductPhotos(writer, encoding, callback) {
-  let i = 10000000;
-  let id = 0;
+  let i = 100;
+  let id = -1;
   console.log('#:', id);
   function write() {
     let ok = true;
@@ -204,9 +203,9 @@ function writeTenMillionProductPhotos(writer, encoding, callback) {
 }
 
 
-// writeTenMillionProductPhotos(writeProductPhotos, 'utf-8', () => {
-//   writeProductPhotos.end();
-// });
+writeTenMillionProductPhotos(writeProductPhotos, 'utf-8', () => {
+  writeProductPhotos.end();
+});
 
 
 
@@ -214,8 +213,8 @@ function writeTenMillionProductPhotos(writer, encoding, callback) {
 
 
 function writeTenMillionProductSkus(writer, encoding, callback) {
-  let i = 10000000;
-  let id = 0;
+  let i = 100;
+  let id = -1;
   console.log('#:', id);
   function write() {
     let ok = true;
