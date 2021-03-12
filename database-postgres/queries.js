@@ -29,6 +29,14 @@ const getProductList = (req, res) => {
 
 //get single product with a product id
 
+const getsingleproductaspromise = (id) => {
+  let resultpromise = pool.query(`select * from products where id = $1`, [id]);
+  return new Promise((resolve, reject) => {
+    resultPromise.then((pgResult) => {
+      resolve(pgResult.rows);
+    });
+  });
+}
 
 const getSingleProduct = (req, res) => {
   const id = req.params.product_id;
@@ -154,6 +162,8 @@ const getSingleProductStyles = (req, res) => {
 
 
 module.exports = {
+  getSingleProductAsPromise,
+  mockGetSingleProduct,
   getProductList,
   getSingleProduct,
   getSingleProductStyles
